@@ -9,6 +9,8 @@ from django.http import Http404
 from rest_framework import mixins,generics,viewsets
 from django.shortcuts import get_object_or_404
 
+#function based view
+
 @api_view(['GET','POST'])
 def studentsView(request):
     if request.method == 'GET':
@@ -44,6 +46,8 @@ def studentDetailView(request,pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 """
+#generics
+
 class Employees(generics.ListCreateAPIView):
     queryset = Employee.objects.all()
     serializer_class=EmployeeSerializer
@@ -55,6 +59,8 @@ class EmployeeDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class=EmployeeSerializer
     lookup_field ='pk'
 """
+"""
+#viewset
 
 class EmployeeViewset(viewsets.ViewSet):
     def list(self,request):
@@ -86,3 +92,7 @@ class EmployeeViewset(viewsets.ViewSet):
         employee=get_object_or_404(Employee,pk=pk)
         employee.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+"""
+class EmployeeViewset(viewsets.ModelViewSet):
+    queryset=Employee.objects.all()
+    serializer_class=EmployeeSerializer
